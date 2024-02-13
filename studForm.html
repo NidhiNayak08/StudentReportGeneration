@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="studentApp">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Info Form</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <div class="container" ng-controller="StudentController">
+    <div class="form-container">
+      <h2>Student Info Form</h2>
+      <form name="studentForm" ng-submit="submitForm()" novalidate>
+        <label for="name">Name:</label>
+        <input type="text" id="name" ng-model="student.name" required>
+
+        <label for="rollNo">Roll Number:</label>
+        <input type="text" id="rollNo" ng-model="student.rollNo" required>
+
+        <label for="course">Course:</label>
+        <input type="text" id="course" ng-model="student.course" required>
+
+        <!-- <label for="fees">Fees:</label>
+        <input type="number" id="fees" ng-model="student.fees" required> -->
+
+        <label for="emarks">Eng Marks:</label>
+        <input type="number" id="emarks" ng-model="student.emarks" required>
+
+        <label for="mmarks">Math Marks:</label>
+        <input type="number" id="mmarks" ng-model="student.mmarks" required>
+
+        <label for="smarks">Science Marks:</label>
+        <input type="number" id="smarks" ng-model="student.smarks" required>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" ng-model="student.dob" required>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div class="student-info-container">
+      <h3>Student Report Generation</h3>
+      <p>Name: {{ student.name | uppercase}}</p>
+      <p>Roll Number: {{ student.rollNo |limitTo: 2 }}</p>
+      <p>DOB: {{ student.dob}}</p>
+      <p>Course: {{ student.course }}</p>
+      <!-- <p>Fees paid: {{ student.fees | currency }}</p> -->
+      <p>Eng Marks: {{ student.emarks }}</p>
+      <p>Math Marks: {{ student.mmarks }}</p>
+      <p>Science Marks: {{ student.smarks }}</p>
+      <p>Total Marks: {{ calculateTotalMarks() }}</p>
+    </div>
+  </div>
+
+  <script>
+    angular.module('studentApp', [])
+      .controller('StudentController', function($scope) {
+        $scope.student = {};
+
+        $scope.calculateTotalMarks = function() {
+          // Calculate total marks as the sum of Eng Marks and Math Marks
+          return ($scope.student.emarks || 0) + ($scope.student.mmarks || 0);
+        };
+
+        $scope.submitForm = function() {
+          // Handle form submission logic here
+          if ($scope.studentForm.$valid) {
+            // Form is valid, perform submission actions
+            alert('Form submitted successfully!');
+          } else {
+            // Form is not valid, show an error or take appropriate action
+            alert('Form is not valid. Please check the fields.');
+          }
+        };
+      });
+  </script>
+</body>
+</html>
